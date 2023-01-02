@@ -4,10 +4,10 @@
 			<div class="sidebar-content">
 				<ul class="nav nav-primary">
 					<li class="nav-item">
-						<a href="widgets.html">
+						<BaseLink :link-to="{name: 'dashboard'}">
 							<i class="fas fa-home"></i>
 							<p>Dashboard</p>
-						</a>
+						</BaseLink>
 					</li>
 					<li class="nav-section">
 						<span class="sidebar-mini-icon">
@@ -16,10 +16,10 @@
 						<h4 class="text-section">Data</h4>
 					</li>
 					<li class="nav-item">
-						<a href="widgets.html">
+						<BaseLink :link-to="{name: 'staff'}">
 							<i class="la flaticon-suitcase"></i>
 							<p>Staff</p>
-						</a>
+						</BaseLink>
 					</li>
 					<li class="nav-item">
 						<a href="widgets.html">
@@ -44,3 +44,6 @@
 		</div>
 	</div>
 </template>
+<script setup>
+	import BaseLink from '../Button/BaseLink.vue'
+</script>
