@@ -35,12 +35,12 @@
 											<tr role="row">
 												<th class="sorting_asc" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1"
 													aria-sort="ascending" aria-label="Name: activate to sort column descending"
-													style="width: 50%;">Name</th>
+													style="width: 50%;">Nama</th>
 												<th class="sorting" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1"
-													aria-label="Position: activate to sort column ascending" style="width: auto;">Position
+													aria-label="Position: activate to sort column ascending" style="width: auto;">Jabatan
 												</th>
 												<th style="width: 8%;" class="sorting" tabindex="0" aria-controls="add-row" rowspan="1"
-													colspan="1" aria-label="Action: activate to sort column ascending">Action</th>
+													colspan="1" aria-label="Action: activate to sort column ascending">Aksi</th>
 											</tr>
 										</thead>
 										<tbody>

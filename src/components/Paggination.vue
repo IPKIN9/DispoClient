@@ -37,6 +37,23 @@ const emits = defineEmits(['clickEvent'])
 
 const triggerButton = (params) => {
 	emits('clickEvent', params)
+
+	let page = props.paggingData.page
+	let first = configButton.firstButton
+	let end = configButton.endButton
+	if (page > end && page != pageOff.value) {
+		configButton.firstButton += 1
+		configButton.endButton += 1
+	} else if (page < (first + 1) && page != 1) {
+		configButton.firstButton -= 1
+		configButton.endButton -= 1
+	} else if (page === pageOff.value) {
+		configButton.firstButton = pageOff.value - 3
+		configButton.endButton = pageOff.value
+	} else if (page === 1) {
+		configButton.firstButton = 0
+		configButton.endButton = 3
+	}
 }
 
 const pageOff = computed(() => {
