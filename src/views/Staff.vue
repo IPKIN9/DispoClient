@@ -22,7 +22,7 @@
 								</div>
 								<div class="col-sm-12 col-md-6">
 									<div id="add-row_filter" class="dataTables_filter">
-										<label>Search:<input type="search" class="form-control form-control-sm" placeholder=""
+										<label>Search:<input @keyup="getStaff" v-model="meta.search" type="search" class="form-control form-control-sm" placeholder=""
 												aria-controls="add-row"></label>
 									</div>
 								</div>
@@ -44,9 +44,9 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr role="row" class="odd">
-												<td class="sorting_1">Airi Satou</td>
-												<td>Accountant</td>
+											<tr v-for="(staff, index) in payloadList" :key="index" role="row" class="odd">
+												<td class="sorting_1">{{ staff.nama }}</td>
+												<td>{{ staff.jabatan }}</td>
 												<td>
 													<div class="form-button-action">
 														<BaseButton data-toggle="tooltip" title="" class="btn-link btn-primary btn-lg"
@@ -73,7 +73,8 @@
 	</div>
 </template>
 <script setup>
-import { reactive } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
+import Staff from '../utils/Staff'
 import BaseButton from '../components/Button/BaseButton.vue'
 import Short from '../components/Button/Short.vue'
 import Paggination from '../components/Paggination.vue'
@@ -81,10 +82,30 @@ import Paggination from '../components/Paggination.vue'
 const meta = reactive({
 	limit: 10,
 	page: 1,
-	total: 50
+	total: 50,
+	search: ''
 })
+
+const payloadList = ref([])
+
+// Get data
+// #####################################################
+const getStaff = () => {
+	Staff.getAll(meta)
+	.then((res) => {
+		let item = res.data
+		payloadList.value = item.data
+	})
+	.catch((err) => {
+		console.log(err)
+	})
+}
 
 const pagginate = (params) => {
 	meta.page = params
 }
+
+onMounted(() => {
+	getStaff()
+})
 </script>
