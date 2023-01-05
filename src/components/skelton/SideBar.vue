@@ -1,5 +1,5 @@
 <template>
-	<div class="sidebar" data-background-color="dark2">
+	<div class="sidebar" data-background-color="white">
 		<div class="sidebar-wrapper scrollbar scrollbar-inner">
 			<div class="sidebar-content">
 				<ul class="nav nav-primary">
