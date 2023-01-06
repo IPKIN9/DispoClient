@@ -9,7 +9,7 @@
 			type: String,
 			default: 'button'
 		},
-		dataId: String,
+		dataId: Number,
 		dataRows: Object
 	})
 

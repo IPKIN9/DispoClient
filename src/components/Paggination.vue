@@ -109,7 +109,9 @@ const totalButton = computed(() => {
 	let proc = pageOff.value
 	let count = []
 	for (let index = configButton.firstButton; index < proc && index < configButton.endButton; index++) {
-		count.push(index + 1)
+		if (index > -1) {
+			count.push(index + 1)
+		}
 	}
 	return count
 })

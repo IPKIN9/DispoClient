@@ -10,5 +10,9 @@ export default {
 
     upsert(payload){
         return Api(baseUrl).post(endPoint, payload)
+    },
+
+    delete(id){
+        return Api(baseUrl).delete(`${endPoint}${id}`)
     }
 }

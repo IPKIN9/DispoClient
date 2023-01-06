@@ -5,7 +5,7 @@
 				<div class="card-header">
 					<div class="d-flex align-items-center">
 						<h4 class="card-title">Tabel Staff</h4>
-						<BaseButton @event-click="showHideModal" class="btn-primary btn-round ml-auto">
+						<BaseButton @event-click="showHideModal('newData')" class="btn-primary btn-round ml-auto">
 							<i class="fa fa-plus"></i>
 							Tambah Data
 						</BaseButton>
@@ -49,11 +49,11 @@
 												<td>{{ staff.jabatan }}</td>
 												<td>
 													<div class="form-button-action">
-														<BaseButton data-toggle="tooltip" title="" class="btn-link btn-primary btn-lg"
+														<BaseButton @event-click="editStaff" :dataRows="payloadList[index]" data-toggle="tooltip" title="" class="btn-link btn-primary btn-lg"
 															data-original-title="Edit Task">
 															<i class="fa fa-edit"></i>
 														</BaseButton>
-														<BaseButton data-toggle="tooltip" title="" class="btn-link btn-danger"
+														<BaseButton @event-click="deleteStaff" :data-id="staff.id" data-toggle="tooltip" title="" class="btn-link btn-danger"
 															data-original-title="Remove">
 															<i class="fa fa-times"></i>
 														</BaseButton>
@@ -94,7 +94,7 @@
 		</template>
 		<template v-slot:footer>
 			<BaseButton @event-click="upsertStaff" class="btn-primary rounded mr-2">Proses</BaseButton>
-			<BaseButton data-dismiss="modal" aria-label="Close" class="btn-danger rounded">Batal</BaseButton>
+			<BaseButton @event-click="showHideModal" class="btn-danger rounded">Batal</BaseButton>
 		</template>
 	</BaseModal>
 </template>
@@ -103,6 +103,7 @@ import { reactive, ref, onMounted, computed } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required, helpers } from '@vuelidate/validators'
 import Staff from '../utils/Staff'
+import SweetAlert from '../utils/SweetAlert'
 import BaseButton from '../components/Button/BaseButton.vue'
 import Short from '../components/Button/Short.vue'
 import Paggination from '../components/Paggination.vue'
@@ -161,12 +162,44 @@ const upsertStaff = async () => {
 		Staff.upsert(payload)
 		.then((res) => {
 			let item = res.data
-			console.log(item)
+			showHideModal()
+			successAlert(item.message)
 		})
 		.catch((err) => {
 			console.log(err)
 		})
 	}
+}
+
+// Edit function
+// #####################################################
+const editStaff = (params) => {
+	for (const key in params.dataRows) {
+		payload[key] = params.dataRows[key]
+	}
+	payload.id = params.dataRows['id']
+	showHideModal()
+}
+
+// Delete function
+// #####################################################
+const deleteStaff = (params) => {
+	SweetAlert.alertConfirm({
+		title: 'Hapus Data',
+		confirmtext: 'Yes'
+	})
+	.then((res) => {
+		if (res.isConfirmed) {
+			Staff.delete(params.dataId)
+			.then((sucess) => {
+				let item = sucess.data
+				successAlert(item.message)
+			})
+			.catch((err) => {
+				console.log(err)
+			})
+		}
+	})
 }
 
 // Another function
@@ -177,11 +210,32 @@ const pagginate = (params) => {
 	getStaff()
 }
 
-// const modal = $('#myModal')
-
 const showHideModal = (params) => {
-	// modal.modal('show') ? modal.modal('show') : modal.modal('hide')
-	$('#myModal').modal('show')
+	if (params === 'newData') {
+		clearInput()
+	}
+	$('#myModal').modal('show') ? $('#myModal').modal('hide') : $('#myModal').modal('show')
+}
+
+const successAlert = (params) => {
+	SweetAlert.alertSuccess(params)
+	.then((res) => {
+		if (res.isConfirmed) {
+			getStaff()
+			clearInput()
+		}
+	})
+	.catch((err) => {
+		console.log(err)
+	})
+}
+
+const clearInput = () => {
+	v$.value.$reset()
+	for (const key in payload) {
+		payload[key] = ''
+	}
+	delete payload.id
 }
 
 onMounted(() => {
