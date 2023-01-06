@@ -37,10 +37,17 @@
 													aria-sort="ascending" aria-label="Name: activate to sort column descending"
 													style="width: 50%;">Nama</th>
 												<th class="sorting" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1"
-													aria-label="Position: activate to sort column ascending" style="width: auto;">Jabatan
+													aria-label="Position: activate to sort column ascending" style="width: auto;">Stambuk
+												</th>
+                                                <th class="sorting" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1"
+													aria-label="Position: activate to sort column ascending" style="width: auto;">Program Studi
+												</th>
+                                                <th class="sorting" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1"
+													aria-label="Position: activate to sort column ascending" style="width: auto;">Fakultas
 												</th>
 												<th style="width: 8%;" class="sorting" tabindex="0" aria-controls="add-row" rowspan="1"
-													colspan="1" aria-label="Action: activate to sort column ascending">Aksi</th>
+													colspan="1" aria-label="Action: activate to sort column ascending">Aksi
+                                                </th>
 											</tr>
 										</thead>
 										<tbody>
