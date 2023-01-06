@@ -22,10 +22,10 @@
 						</BaseLink>
 					</li>
 					<li class="nav-item">
-						<a href="widgets.html">
-							<i class="la flaticon-users"></i>
+						<BaseLink :link-to="{name: 'mahasiswa'}">
+						<i class="la flaticon-users"></i>
 							<p>Mahasiswa</p>
-						</a>
+						</BaseLink>
 					</li>
 					<li class="nav-item">
 						<a href="widgets.html">
