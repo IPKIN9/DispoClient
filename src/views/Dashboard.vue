@@ -1,6 +1,6 @@
 <template>
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-12">
 		<div class="card card-primary bg-primary-gradient">
 			<div class="card-body">
 				<div class="d-flex">
@@ -8,7 +8,7 @@
 					<img src="../../src/assets/img/untad.png" class="mb-4 mr-3" alt="" style="width: 70px; margin-left: 260px;">
 				</div>
 				<div class="row">
-					<div class="col-md-10">
+					<div class="col-md-11">
 						<input type="text" class="form-control">
 					</div>
 						<a href="" class="btn btn-primary">Search</a>
@@ -72,12 +72,5 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-6">
-		<div class="card card-primary bg-primary-gradient">
-			<div class="card-body">
-
-			</div>
-		</div>
-	</div>
-	</div>
+</div>
 </template>
