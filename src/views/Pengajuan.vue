@@ -28,10 +28,11 @@
                        <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-label">Keterangan</label>
-                                <textarea class="form-control" name="" id="" cols="30" rows="14">
+                                <textarea class="form-control" name="" id="" cols="30" rows="10">
 
                                 </textarea>
                             </div>	
+                            <button class="btn btn-primary ml-2 mt-2">Kirim</button>
                        </div>
                     </form>
                 </div>
