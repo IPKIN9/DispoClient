@@ -3,6 +3,7 @@ import Dashboard from '../views/Dashboard.vue'
 import Staff from '../views/Staff.vue'
 import Mahasiswa from '../views/Mahasiswa.vue'
 import Pengajuan from '../views/Pengajuan.vue'
+import Ticket from '../views/Ticket.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,11 @@ const router = createRouter({
       path: '/pengajuan',
       name: 'pengajuan',
       component: Pengajuan
+    },
+    {
+      path: '/ticket',
+      name: 'ticket',
+      component: Ticket
     }
   ]
 })

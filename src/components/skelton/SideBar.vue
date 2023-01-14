@@ -28,10 +28,10 @@
 						</BaseLink>
 					</li>
 					<li class="nav-item">
-						<a href="widgets.html">
+						<BaseLink :link-to="{name: 'ticket'}">
 							<i class="la flaticon-price-tag"></i>
 							<p>Ticket</p>
-						</a>
+						</BaseLink>
 					</li>
 					<li class="nav-item">
 						<a href="widgets.html">
