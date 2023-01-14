@@ -39,6 +39,12 @@
 							<p>Account</p>
 						</a>
 					</li>
+					<li class="nav-item">
+						<BaseLink :link-to="{name: 'pengajuan'}">
+						<i class="la flaticon-users"></i>
+							<p>Pengajuan</p>
+						</BaseLink>
+					</li>
 				</ul>
 			</div>
 		</div>
