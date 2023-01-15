@@ -175,13 +175,15 @@
 	</BaseModal>
 </template>
 <script setup>
-import { reactive, ref, onMounted, computed } from 'vue'
+import { reactive, ref, onMounted, onBeforeMount, computed } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required, helpers } from '@vuelidate/validators'
 import Ticket from '../utils/Ticket'
 import Mahasiswa from '../utils/Mahasiswa'
 import Staff from '../utils/Staff'
 import SweetAlert from '../utils/SweetAlert'
+import AuthCheck from '../utils/AuthCheck'
+import {useRouter} from 'vue-router'
 import BaseButton from '../components/Button/BaseButton.vue'
 import Short from '../components/Button/Short.vue'
 import Paggination from '../components/Paggination.vue'
@@ -190,6 +192,8 @@ import BaseInput from '../components/Input/BaseInput.vue'
 import TopBar from '../components/skelton/TopBar.vue'
 import SideBar from '../components/skelton/SideBar.vue'
 import Footer from '../components/skelton/Footer.vue'
+
+const router = useRouter()
 
 const meta = reactive({
 	limit: 10,
@@ -210,7 +214,8 @@ const getTicket = () => {
 			meta.total = item.meta.total
 		})
 		.catch((err) => {
-			console.log(err)
+			let code = err.response.status
+			errorHandle(code)
 		})
 }
 
@@ -262,7 +267,8 @@ const upsertTicket = async () => {
 				successAlert(item.message)
 			})
 			.catch((err) => {
-				console.log(err)
+				let code = err.response.status
+				errorHandle(code)
 			})
 	}
 }
@@ -290,18 +296,19 @@ const deleteTicket = (params) => {
 		title: 'Hapus Data',
 		confirmtext: 'Yes'
 	})
-		.then((res) => {
-			if (res.isConfirmed) {
-				Ticket.delete(params.dataId)
-					.then((sucess) => {
-						let item = sucess.data
-						successAlert(item.message)
-					})
-					.catch((err) => {
-						console.log(err)
-					})
-			}
-		})
+	.then((res) => {
+		if (res.isConfirmed) {
+			Ticket.delete(params.dataId)
+			.then((sucess) => {
+				let item = sucess.data
+				successAlert(item.message)
+			})
+			.catch((err) => {
+				let code = err.response.status
+				errorHandle(code)
+			})
+		}
+	})
 }
 
 // Another function
@@ -317,13 +324,14 @@ const getstaff = () => {
 		page: 1,
 		search: staffName.value
 	})
-		.then((res) => {
-			let item = res.data
-			staffPayload.value = item.data
-		})
-		.catch((err) => {
-			console.log(err);
-		})
+	.then((res) => {
+		let item = res.data
+		staffPayload.value = item.data
+	})
+	.catch((err) => {
+		let code = err.response.status
+		errorHandle(code);
+	})
 }
 
 const getMhs = () => {
@@ -332,13 +340,14 @@ const getMhs = () => {
 		page: 1,
 		search: mhsName.value
 	})
-		.then((res) => {
-			let item = res.data
-			mhsPayload.value = item.data
-		})
-		.catch((err) => {
-			console.log(err);
-		})
+	.then((res) => {
+		let item = res.data
+		mhsPayload.value = item.data
+	})
+	.catch((err) => {
+		let code = err.response.status
+		errorHandle(code);
+	})
 }
 
 const changeStaffName = (params) => {
@@ -369,15 +378,16 @@ const showHideModal = (params) => {
 
 const successAlert = (params) => {
 	SweetAlert.alertSuccess(params)
-		.then((res) => {
-			if (res.isConfirmed) {
-				getTicket()
-				clearInput()
-			}
-		})
-		.catch((err) => {
-			console.log(err)
-		})
+	.then((res) => {
+		if (res.isConfirmed) {
+			getTicket()
+			clearInput()
+		}
+	})
+	.catch((err) => {
+		let code = err.response.status
+		errorHandle(code)
+	})
 }
 
 const clearInput = () => {
@@ -394,6 +404,20 @@ const clearInput = () => {
 	staffName.value = ''
 	mhsName.value = ''
 }
+
+const errorHandle = (code) => {
+	SweetAlert.alertError(AuthCheck.checkToken(code, goToLogin()))
+}
+
+const goToLogin = () => {
+	router.replace('/login')			
+}
+
+onBeforeMount(() => {
+	if (AuthCheck.checkToken() === 401) {
+		goToLogin()
+	}
+})
 
 onMounted(() => {
 	getTicket()

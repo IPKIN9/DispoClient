@@ -53,7 +53,6 @@ import { useRouter } from "vue-router"
 import { reactive } from "vue"
 import Auth from '../utils/Auth'
 import CryptoJS from 'crypto-js'
-import jwt_decode from "jwt-decode"
 import BaseButton from '../components/Button/BaseButton.vue';
 
 const grantSecret = import.meta.env.VITE_GRANT_SECRET

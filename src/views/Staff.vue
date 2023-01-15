@@ -119,12 +119,13 @@
 	</BaseModal>
 </template>
 <script setup>
-import { reactive, ref, onMounted, computed } from 'vue'
+import { reactive, ref, onMounted, onBeforeMount, computed } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required, helpers } from '@vuelidate/validators'
 import Staff from '../utils/Staff'
-import AuthCheck from '../utils/AuthCheck'
 import SweetAlert from '../utils/SweetAlert'
+import AuthCheck from '../utils/AuthCheck'
+import { useRouter } from 'vue-router'
 import BaseButton from '../components/Button/BaseButton.vue'
 import Short from '../components/Button/Short.vue'
 import Paggination from '../components/Paggination.vue'
@@ -133,6 +134,8 @@ import BaseInput from '../components/Input/BaseInput.vue'
 import TopBar from '../components/skelton/TopBar.vue'
 import SideBar from '../components/skelton/SideBar.vue'
 import Footer from '../components/skelton/Footer.vue'
+
+const router = useRouter()
 
 const meta = reactive({
 	limit: 10,
@@ -153,7 +156,8 @@ const getStaff = () => {
 			meta.total = item.meta.total
 		})
 		.catch((err) => {
-			console.log(err)
+			let code = err.response.status
+			errorHandle(code)
 		})
 }
 
@@ -190,7 +194,8 @@ const upsertStaff = async () => {
 				successAlert(item.message)
 			})
 			.catch((err) => {
-				console.log(err)
+				let code = err.response.status
+				errorHandle(code)
 			})
 	}
 }
@@ -220,7 +225,8 @@ const deleteStaff = (params) => {
 						successAlert(item.message)
 					})
 					.catch((err) => {
-						console.log(err)
+						let code = err.response.status
+						errorHandle(code)
 					})
 			}
 		})
@@ -250,7 +256,8 @@ const successAlert = (params) => {
 			}
 		})
 		.catch((err) => {
-			console.log(err)
+			let code = err.response.status
+			errorHandle(code)
 		})
 }
 
@@ -261,6 +268,20 @@ const clearInput = () => {
 	}
 	delete payload.id
 }
+
+const errorHandle = (code) => {
+	SweetAlert.alertError(AuthCheck.checkToken(code, goToLogin()))
+}
+
+const goToLogin = () => {
+	router.replace('/login')			
+}
+
+onBeforeMount(() => {
+	if (AuthCheck.checkToken() === 401) {
+		goToLogin()
+	}
+})
 
 onMounted(() => {
 	getStaff()
