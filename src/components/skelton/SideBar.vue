@@ -3,7 +3,7 @@
 		<div class="sidebar-wrapper scrollbar scrollbar-inner">
 			<div class="sidebar-content">
 				<ul class="nav nav-primary">
-					<li class="nav-item">
+					<li class="nav-item" :class="$route.name === 'dashboard' ? 'active' : ''">
 						<BaseLink :link-to="{name: 'dashboard'}">
 							<i class="fas fa-home"></i>
 							<p>Dashboard</p>
@@ -15,19 +15,19 @@
 						</span>
 						<h4 class="text-section">Data</h4>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item" :class="$route.name === 'staff' ? 'active' : ''">
 						<BaseLink :link-to="{name: 'staff'}">
 							<i class="la flaticon-suitcase"></i>
 							<p>Staff</p>
 						</BaseLink>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item" :class="$route.name === 'mahasiswa' ? 'active' : ''">
 						<BaseLink :link-to="{name: 'mahasiswa'}">
 						<i class="la flaticon-users"></i>
 							<p>Mahasiswa</p>
 						</BaseLink>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item" :class="$route.name === 'ticket' ? 'active' : ''">
 						<BaseLink :link-to="{name: 'ticket'}">
 							<i class="la flaticon-price-tag"></i>
 							<p>Ticket</p>
@@ -39,7 +39,7 @@
 							<p>Account</p>
 						</a>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item" :class="$route.name === 'pengajuan' ? 'active' : ''">
 						<BaseLink :link-to="{name: 'pengajuan'}">
 						<i class="la flaticon-users"></i>
 							<p>Pengajuan</p>

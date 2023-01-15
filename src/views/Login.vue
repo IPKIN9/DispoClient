@@ -50,8 +50,9 @@ import BaseButton from '../components/Button/BaseButton.vue';
 </style>
 <script setup>
 import { useRouter } from "vue-router"
-import { reactive } from "vue"
+import { reactive, onBeforeMount } from "vue"
 import Auth from '../utils/Auth'
+import AuthCheck from "../utils/AuthCheck"
 import CryptoJS from 'crypto-js'
 import BaseButton from '../components/Button/BaseButton.vue';
 
@@ -107,5 +108,11 @@ const clearInput = () => {
   payload.password = ''
   payload.scope = ''
 }
+
+onBeforeMount(() => {
+  if (AuthCheck.userToken() === 200) {
+    router.replace('/')
+  }
+})
 
 </script>

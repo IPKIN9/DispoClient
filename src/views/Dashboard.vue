@@ -16,18 +16,23 @@
 							<div class="card card-primary bg-primary-gradient">
 								<div class="card-body">
 									<div class="d-flex">
-										<h3 class="mt-3 pb-1 mb-4 fw-bold flex-grow-1">Data Ticket</h3>
+										<h1 class="mt-3 pb-1 mb-4 fw-bold flex-grow-1">Selamat Datang</h1>
 										<img src="../../src/assets/img/untad.png" class="mb-4 mr-3" alt=""
 											style="width: 70px; margin-left: 260px;">
 									</div>
-									<div class="row">
-										<div class="col-md-11">
-											<input type="text" class="form-control">
+									<div class="d-flex mb-1">
+										<span>Silahkan lihat masukan kode tiket untuk melihat status progress</span>
+									</div>
+									<div class="d-flex">
+										<div class="float-left flex-grow-1">
+											<input type="text" class="form-control" placeholder="Search for...">
 										</div>
-										<a href="" class="btn btn-primary">Search</a>
+										<div class="float-right">
+											<BaseButton class="btn-primary ml-3">Search</BaseButton>
+										</div>
 									</div>
 									<div class="row">
-										<div class="col-sm-6">
+										<div class="col-lg-6">
 											<div>
 												<h4 class="mt-4 pb-2 mb-0 fw-bold">Data Mahasiswa</h4>
 												<table width="300px" style="height: 130px;">
@@ -54,29 +59,24 @@
 												</table>
 											</div>
 										</div>
-										<div class="col-sm-6">
+										<div class="col-lg-6">
 											<div>
-												<h4 class="mt-4 pb-2 mb-0 fw-bold">Data Mahasiswa</h4>
+												<h4 class="mt-4 pb-2 mb-0 fw-bold">Ticket</h4>
 												<table width="300px" style="height: 130px;">
 													<tr>
-														<td>Nama</td>
+														<td>Nomor Tiket</td>
 														<td>:</td>
 														<td>Nazar</td>
 													</tr>
 													<tr>
-														<td>Stambuk</td>
+														<td>Keterangan</td>
 														<td>:</td>
 														<td>5520119031</td>
 													</tr>
 													<tr>
-														<td>Program Studi</td>
+														<td>Di Setujui</td>
 														<td>:</td>
 														<td>Teknik Informatika</td>
-													</tr>
-													<tr>
-														<td>Fakultas</td>
-														<td>:</td>
-														<td>Teknik</td>
 													</tr>
 												</table>
 											</div>
@@ -94,7 +94,9 @@
 		<Footer/>
 	</div>
 </template>
+
 <script setup>
+import BaseButton from '../components/Button/BaseButton.vue';
 import Footer from '../components/skelton/Footer.vue';
 import SideBar from '../components/skelton/SideBar.vue';
 import TopBar from '../components/skelton/TopBar.vue';
