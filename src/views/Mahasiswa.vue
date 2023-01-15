@@ -1,84 +1,106 @@
 <template>
-	<div class="row">
-		<div class="col-md-12">
-			<div class="card">
-				<div class="card-header">
-					<div class="d-flex align-items-center">
-						<h4 class="card-title">Tabel Mahasiswa</h4>
-						<BaseButton @event-click="showHideModal('newData')" class="btn-primary btn-round ml-auto">
-							<i class="fa fa-plus"></i>
-							Tambah Data
-						</BaseButton>
-					</div>
-				</div>
-				<div class="card-body">
-					<div class="table-responsive">
-						<div id="add-row_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-							<div class="row">
-								<div class="col-sm-12 col-md-6">
-									<div class="dataTables_length" id="add-row_length">
-										<Short v-model="meta.limit" />
+	<div class="wrapper sidebar_minimize">
+		<div class="main-header">
+			<TopBar />
+		</div>
+
+		<!-- Sidebar -->
+		<SideBar />
+		<!-- End Sidebar -->
+
+		<div class="main-panel">
+			<div class="content">
+				<div class="page-inner">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<div class="d-flex align-items-center">
+										<h4 class="card-title">Tabel Mahasiswa</h4>
+										<BaseButton @event-click="showHideModal('newData')" class="btn-primary btn-round ml-auto">
+											<i class="fa fa-plus"></i>
+											Tambah Data
+										</BaseButton>
 									</div>
 								</div>
-								<div class="col-sm-12 col-md-6">
-									<div id="add-row_filter" class="dataTables_filter">
-										<label>Search:<input @keyup="getMahasiswa" v-model="meta.search" type="search"
-												class="form-control form-control-sm" placeholder="" aria-controls="add-row"></label>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-sm-12">
-									<table id="add-row" class="display table table-striped table-hover dataTable" role="grid"
-										aria-describedby="add-row_info">
-										<thead>
-											<tr role="row">
-												<th class="sorting_asc" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1"
-													aria-sort="ascending" aria-label="Name: activate to sort column descending"
-													style="width: 50%;">Nama</th>
-												<th class="sorting" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1"
-													aria-label="Position: activate to sort column ascending" style="width: auto;">Stambuk
-												</th>
-                                                <th class="sorting" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1"
-													aria-label="Position: activate to sort column ascending" style="width: auto;">Program Studi
-												</th>
-                                                <th class="sorting" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1"
-													aria-label="Position: activate to sort column ascending" style="width: auto;">Fakultas
-												</th>
-												<th style="width: 8%;" class="sorting" tabindex="0" aria-controls="add-row" rowspan="1"
-													colspan="1" aria-label="Action: activate to sort column ascending">Aksi
-                                                </th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr v-for="(mahasiswa, index) in payloadList" :key="index" role="row" class="odd">
-												<td class="sorting_1">{{ mahasiswa.nama }}</td>
-												<td>{{ mahasiswa.stambuk }}</td>
-                                                <td>{{ mahasiswa.prodi }}</td>
-                                                <td>{{ mahasiswa.fakultas }}</td>
-												<td>
-													<div class="form-button-action">
-														<BaseButton @event-click="editMahasiswa" :dataRows="payloadList[index]" data-toggle="tooltip" title="" class="btn-link btn-primary btn-lg"
-															data-original-title="Edit Task">
-															<i class="fa fa-edit"></i>
-														</BaseButton>
-														<BaseButton @event-click="deleteMahasiswa" :data-id="mahasiswa.id" data-toggle="tooltip" title="" class="btn-link btn-danger"
-															data-original-title="Remove">
-															<i class="fa fa-times"></i>
-														</BaseButton>
+								<div class="card-body">
+									<div class="table-responsive">
+										<div id="add-row_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+											<div class="row">
+												<div class="col-sm-12 col-md-6">
+													<div class="dataTables_length" id="add-row_length">
+														<Short v-model="meta.limit" />
 													</div>
-												</td>
-											</tr>
-										</tbody>
-									</table>
+												</div>
+												<div class="col-sm-12 col-md-6">
+													<div id="add-row_filter" class="dataTables_filter">
+														<label>Search:<input @keyup="getMahasiswa" v-model="meta.search" type="search"
+																class="form-control form-control-sm" placeholder="" aria-controls="add-row"></label>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-12">
+													<table id="add-row" class="display table table-striped table-hover dataTable" role="grid"
+														aria-describedby="add-row_info">
+														<thead>
+															<tr role="row">
+																<th class="sorting_asc" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1"
+																	aria-sort="ascending" aria-label="Name: activate to sort column descending"
+																	style="width: 50%;">Nama</th>
+																<th class="sorting" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1"
+																	aria-label="Position: activate to sort column ascending" style="width: auto;">Stambuk
+																</th>
+																<th class="sorting" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1"
+																	aria-label="Position: activate to sort column ascending" style="width: auto;">Program
+																	Studi
+																</th>
+																<th class="sorting" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1"
+																	aria-label="Position: activate to sort column ascending" style="width: auto;">Fakultas
+																</th>
+																<th style="width: 8%;" class="sorting" tabindex="0" aria-controls="add-row" rowspan="1"
+																	colspan="1" aria-label="Action: activate to sort column ascending">Aksi
+																</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr v-for="(mahasiswa, index) in payloadList" :key="index" role="row" class="odd">
+																<td class="sorting_1">{{ mahasiswa.nama }}</td>
+																<td>{{ mahasiswa.stambuk }}</td>
+																<td>{{ mahasiswa.prodi }}</td>
+																<td>{{ mahasiswa.fakultas }}</td>
+																<td>
+																	<div class="form-button-action">
+																		<BaseButton @event-click="editMahasiswa" :dataRows="payloadList[index]"
+																			data-toggle="tooltip" title="" class="btn-link btn-primary btn-lg"
+																			data-original-title="Edit Task">
+																			<i class="fa fa-edit"></i>
+																		</BaseButton>
+																		<BaseButton @event-click="deleteMahasiswa" :data-id="mahasiswa.id"
+																			data-toggle="tooltip" title="" class="btn-link btn-danger"
+																			data-original-title="Remove">
+																			<i class="fa fa-times"></i>
+																		</BaseButton>
+																	</div>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+											<Paggination :pagging-data="meta" @click-event="pagginate" />
+										</div>
+									</div>
 								</div>
 							</div>
-							<Paggination :pagging-data="meta" @click-event="pagginate" />
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
+		<Footer />
+
 	</div>
 	<BaseModal title="Manage data" id-modal="myModal">
 		<template v-slot:body>
@@ -90,7 +112,7 @@
 						<span v-for="error in v$.nama.$errors" :key="error.$uid">
 							<small class="text-danger text-lowercase">field {{ error.$message }}.</small>
 						</span>
-					</div>	
+					</div>
 					<div class="form-group">
 						<label class="form-label">Stambuk</label>
 						<BaseInput v-model="payload.stambuk" placeholder="Masukan disini..." />
@@ -98,14 +120,14 @@
 							<small class="text-danger text-lowercase">field {{ error.$message }}.</small>
 						</span>
 					</div>
-                    <div class="form-group">
+					<div class="form-group">
 						<label class="form-label">Prodi</label>
 						<BaseInput v-model="payload.prodi" placeholder="Masukan disini..." />
 						<span v-for="error in v$.prodi.$errors" :key="error.$uid">
 							<small class="text-danger text-lowercase">field {{ error.$message }}.</small>
 						</span>
 					</div>
-                    <div class="form-group">
+					<div class="form-group">
 						<label class="form-label">Fakultas</label>
 						<BaseInput v-model="payload.fakultas" placeholder="Masukan disini..." />
 						<span v-for="error in v$.fakultas.$errors" :key="error.$uid">
@@ -132,6 +154,9 @@ import Short from '../components/Button/Short.vue'
 import Paggination from '../components/Paggination.vue'
 import BaseModal from '../components/BaseModal.vue'
 import BaseInput from '../components/Input/BaseInput.vue'
+import TopBar from '../components/skelton/TopBar.vue'
+import SideBar from '../components/skelton/SideBar.vue'
+import Footer from '../components/skelton/Footer.vue'
 
 const meta = reactive({
 	limit: 10,
@@ -161,8 +186,8 @@ const getMahasiswa = () => {
 const payload = reactive({
 	nama: '',
 	stambuk: '',
-    prodi: '',
-    fakultas: ''
+	prodi: '',
+	fakultas: ''
 })
 
 const myRegex = helpers.regex(/^[\w\s\d-\.]+$/d)
@@ -176,11 +201,11 @@ const rules = computed(() => {
 			required,
 			myField: helpers.withMessage('value cannot contain special characters', myRegex)
 		},
-        prodi: {
+		prodi: {
 			required,
 			myField: helpers.withMessage('value cannot contain special characters', myRegex)
 		},
-        fakultas: {
+		fakultas: {
 			required,
 			myField: helpers.withMessage('value cannot contain special characters', myRegex)
 		}
@@ -193,14 +218,14 @@ const upsertMahasiswa = async () => {
 
 	if (validate) {
 		Mahasiswa.upsert(payload)
-		.then((res) => {
-			let item = res.data
-			showHideModal()
-			successAlert(item.message)
-		})
-		.catch((err) => {
-			console.log(err)
-		})
+			.then((res) => {
+				let item = res.data
+				showHideModal()
+				successAlert(item.message)
+			})
+			.catch((err) => {
+				console.log(err)
+			})
 	}
 }
 
@@ -221,18 +246,18 @@ const deleteMahasiswa = (params) => {
 		title: 'Hapus Data',
 		confirmtext: 'Yes'
 	})
-	.then((res) => {
-		if (res.isConfirmed) {
-			Mahasiswa.delete(params.dataId)
-			.then((sucess) => {
-				let item = sucess.data
-				successAlert(item.message)
-			})
-			.catch((err) => {
-				console.log(err)
-			})
-		}
-	})
+		.then((res) => {
+			if (res.isConfirmed) {
+				Mahasiswa.delete(params.dataId)
+					.then((sucess) => {
+						let item = sucess.data
+						successAlert(item.message)
+					})
+					.catch((err) => {
+						console.log(err)
+					})
+			}
+		})
 }
 
 // Another function
@@ -252,15 +277,15 @@ const showHideModal = (params) => {
 
 const successAlert = (params) => {
 	SweetAlert.alertSuccess(params)
-	.then((res) => {
-		if (res.isConfirmed) {
-			getMahasiswa()
-			clearInput()
-		}
-	})
-	.catch((err) => {
-		console.log(err)
-	})
+		.then((res) => {
+			if (res.isConfirmed) {
+				getMahasiswa()
+				clearInput()
+			}
+		})
+		.catch((err) => {
+			console.log(err)
+		})
 }
 
 const clearInput = () => {
