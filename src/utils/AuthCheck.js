@@ -1,6 +1,6 @@
 import CryptoJS from "crypto-js";
 
-const grantSecret = import.meta.env.VITE_GRANT_SECRET;
+const tokenSecret = import.meta.env.VITE_TOKEN_SECRET
 
 const envSctructure = {
 	production:'production',
@@ -50,9 +50,10 @@ export default {
   },
 
   rolesCheck() {
-    let roleEncrypt = localStorage.getItem("roles") || null;
+    let roleEncrypt = localStorage.getItem("scope") || null;
+
     if (roleEncrypt) {
-      let roleDecrypt = CryptoJS.AES.decrypt(roleEncrypt, grantSecret).toString(
+      let roleDecrypt = CryptoJS.AES.decrypt(roleEncrypt, tokenSecret).toString(
         CryptoJS.enc.Utf8
       );
       return roleDecrypt;
