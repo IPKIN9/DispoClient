@@ -6,6 +6,6 @@ const endPoint = "/v1/pengajuan/";
 
 export default {
     getStatus(params){
-        return Api(baseUrl).get(`${endPoint}?no_tiket=${params.no_tiket}`, AuthCheck.getToken())
+        return Api(baseUrl).get(`${endPoint}?no_tiket=${params.no_tiket}`)
     }
 }
