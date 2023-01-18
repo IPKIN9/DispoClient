@@ -42,7 +42,8 @@ const router = createRouter({
     {
       path: '/',
       name: 'dashboard',
-      component: Dashboard
+      component: Dashboard,
+      beforeEnter: userGuard
     },
     {
       path: '/staff',

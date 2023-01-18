@@ -51,7 +51,7 @@
 																<th class="sorting" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1"
 																	aria-label="Position: activate to sort column ascending" style="width: auto;">Jabatan
 																</th>
-																<th v-if="scopeCheck === 'crud-list'" style="width: 8%;" class="sorting" tabindex="0" aria-controls="add-row" rowspan="1"
+																<th v-if="scopeCheck() === 'crud-list'" style="width: 8%;" class="sorting" tabindex="0" aria-controls="add-row" rowspan="1"
 																	colspan="1" aria-label="Action: activate to sort column ascending">Aksi</th>
 															</tr>
 														</thead>
@@ -59,14 +59,14 @@
 															<tr v-for="(staff, index) in payloadList" :key="index" role="row" class="odd">
 																<td class="sorting_1">{{ staff.nama }}</td>
 																<td>{{ staff.jabatan }}</td>
-																<td v-if="scopeCheck === 'crud-list'">
+																<td v-if="scopeCheck() === 'crud-list'">
 																	<div class="form-button-action">
 																		<BaseButton @event-click="editStaff" :dataRows="payloadList[index]"
 																			data-toggle="tooltip" title="" class="btn-link btn-primary btn-lg"
 																			data-original-title="Edit Task">
 																			<i class="fa fa-edit"></i>
 																		</BaseButton>
-																		<BaseButton @event-click="deleteStaff" :data-id="staff.id" data-toggle="tooltip"
+																		<BaseButton v-if="staff.jabatan !== 'system'" @event-click="deleteStaff" :data-id="staff.id" data-toggle="tooltip"
 																			title="" class="btn-link btn-danger" data-original-title="Remove">
 																			<i class="fa fa-times"></i>
 																		</BaseButton>
