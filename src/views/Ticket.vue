@@ -47,7 +47,7 @@
 															<tr role="row">
 																<th class="sorting_asc" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1"
 																	aria-sort="ascending" aria-label="Name: activate to sort column descending"
-																	style="width: 50%;">No tiket</th>
+																	style="width: 15%;">No tiket</th>
 																<th class="sorting" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1"
 																	aria-label="Position: activate to sort column ascending" style="width: auto;">Nama
 																	Mahasiswa
@@ -87,7 +87,7 @@
 																			data-original-title="Edit Task">
 																			<i class="fa fa-edit"></i>
 																		</BaseButton>
-																		<BaseButton @event-click="deleteTicket" :data-id="ticket.id" data-toggle="tooltip"
+																		<BaseButton v-if="scopeCheck() === 'crud-list'" @event-click="deleteTicket" :data-id="ticket.id" data-toggle="tooltip"
 																			title="" class="btn-link btn-danger" data-original-title="Remove">
 																			<i class="fa fa-times"></i>
 																		</BaseButton>
@@ -119,13 +119,6 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="form-group">
-						<label class="form-label">No Tiket</label>
-						<BaseInput v-model="payload.no_tiket" placeholder="Masukan disini..." />
-						<span v-for="error in v$.no_tiket.$errors" :key="error.$uid">
-							<small class="text-danger text-lowercase">field {{ error.$message }}.</small>
-						</span>
-					</div>
-					<div class="form-group">
 						<label class="form-label">Nama Mahasiswa</label>
 						<BaseInput v-model="mhsName" @keyup="getMhs" placeholder="Cari mahasiswa..." />
 
@@ -156,14 +149,6 @@
 						<span v-for="error in v$.keterangan.$errors" :key="error.$uid">
 							<small class="text-danger text-lowercase">field {{ error.$message }}.</small>
 						</span>
-					</div>
-					<div class="form-group">
-						<label class="form-label">Verifikasi</label>
-						<div class="custom-control custom-switch">
-							<input v-model="payload.verifikasi" type="checkbox" class="custom-control-input" id="switch1"
-								name="example">
-							<label class="custom-control-label" for="switch1">Tidak/Ya</label>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -222,20 +207,15 @@ const getTicket = () => {
 // Upsert data
 // #####################################################
 const payload = reactive({
-	no_tiket: '',
 	id_mahasiswa: '',
 	id_staff: '',
 	keterangan: '',
-	verifikasi: false
+	verifikasi: 0
 })
 
 const myRegex = helpers.regex(/^[\w\s\d-\.]+$/d)
 const rules = computed(() => {
 	return {
-		no_tiket: {
-			required,
-			myField: helpers.withMessage('value cannot contain special characters', myRegex)
-		},
 		id_mahasiswa: {
 			required,
 			myField: helpers.withMessage('value cannot contain special characters', myRegex)
@@ -269,6 +249,7 @@ const upsertTicket = async () => {
 			.catch((err) => {
 				let code = err.response.status
 				errorHandle(code)
+				console.log(err)
 			})
 	}
 }
@@ -403,6 +384,10 @@ const clearInput = () => {
 
 	staffName.value = ''
 	mhsName.value = ''
+}
+
+const scopeCheck = () => {
+	return AuthCheck.rolesCheck()
 }
 
 const errorHandle = (code) => {

@@ -33,17 +33,17 @@
 							<p>Ticket</p>
 						</BaseLink>
 					</li>
-					<li class="nav-item">
-						<a href="widgets.html">
-							<i class="la flaticon-user-5"></i>
-							<p>Account</p>
-						</a>
-					</li>
-					<li class="nav-item" :class="$route.name === 'pengajuan' ? 'active' : ''">
+					<li v-if="AuthCheck.rolesCheck() === 'crud-list' || AuthCheck.rolesCheck() === 'create-list'" class="nav-item" :class="$route.name === 'pengajuan' ? 'active' : ''">
 						<BaseLink :link-to="{name: 'pengajuan'}">
 						<i class="la flaticon-users"></i>
 							<p>Pengajuan</p>
 						</BaseLink>
+					</li>
+					<li class="nav-item">
+						<a href="#" @click="logout" role="button">
+							<i class="la flaticon-power"></i>
+							<p>Logout</p>
+						</a>
 					</li>
 				</ul>
 			</div>
@@ -51,5 +51,27 @@
 	</div>
 </template>
 <script setup>
+	import { useRouter } from 'vue-router'
+	import AuthCheck from '../../utils/AuthCheck'
 	import BaseLink from '../Button/BaseLink.vue'
+	import SweetAlert from '../../utils/SweetAlert'
+
+	const router = useRouter()
+
+	const logoutProcess = () => {
+		localStorage.removeItem('user')
+		localStorage.removeItem('scope')
+
+		router.replace('/')
+	}
+
+	const logout = () => {
+		SweetAlert.alertConfirm({
+			title: "Keluar sesi?",
+			confirmtext: "Logout"
+		})
+		.then((res) => {
+			logoutProcess()
+		})
+	}
 </script>

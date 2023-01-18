@@ -76,7 +76,7 @@
 																			data-original-title="Edit Task">
 																			<i class="fa fa-edit"></i>
 																		</BaseButton>
-																		<BaseButton @event-click="deleteMahasiswa" :data-id="mahasiswa.id"
+																		<BaseButton v-if="scopeCheck() === 'crud-list'" @event-click="deleteMahasiswa" :data-id="mahasiswa.id"
 																			data-toggle="tooltip" title="" class="btn-link btn-danger"
 																			data-original-title="Remove">
 																			<i class="fa fa-times"></i>
@@ -302,6 +302,10 @@ const clearInput = () => {
 		payload[key] = ''
 	}
 	delete payload.id
+}
+
+const scopeCheck = () => {
+	return AuthCheck.rolesCheck()
 }
 
 const errorHandle = (code) => {

@@ -13,7 +13,7 @@ export default {
         return Api(baseUrl).post(endPoint, payload, AuthCheck.getToken())
     },
 
-    delete(id){
-        return Api(baseUrl).delete(`${endPoint}${id}`, AuthCheck.getToken())
+    deleteData(id){
+        return Api(baseUrl).delete(`${endPoint}/${id}`, AuthCheck.getToken())
     }
 }
