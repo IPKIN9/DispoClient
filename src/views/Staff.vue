@@ -51,7 +51,7 @@
 																<th class="sorting" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1"
 																	aria-label="Position: activate to sort column ascending" style="width: auto;">Jabatan
 																</th>
-																<th style="width: 8%;" class="sorting" tabindex="0" aria-controls="add-row" rowspan="1"
+																<th v-if="scopeCheck === 'crud-list'" style="width: 8%;" class="sorting" tabindex="0" aria-controls="add-row" rowspan="1"
 																	colspan="1" aria-label="Action: activate to sort column ascending">Aksi</th>
 															</tr>
 														</thead>
@@ -59,7 +59,7 @@
 															<tr v-for="(staff, index) in payloadList" :key="index" role="row" class="odd">
 																<td class="sorting_1">{{ staff.nama }}</td>
 																<td>{{ staff.jabatan }}</td>
-																<td>
+																<td v-if="scopeCheck === 'crud-list'">
 																	<div class="form-button-action">
 																		<BaseButton @event-click="editStaff" :dataRows="payloadList[index]"
 																			data-toggle="tooltip" title="" class="btn-link btn-primary btn-lg"
@@ -91,10 +91,10 @@
 		<Footer />
 
 	</div>
-	<BaseModal title="Manage data" id-modal="myModal">
+	<BaseModal modal-size="modal-lg" title="Manage data" id-modal="myModal">
 		<template v-slot:body>
 			<div class="row">
-				<div class="col-lg-12">
+				<div class="col-lg-6">
 					<div class="form-group">
 						<label class="form-label">Nama Lengkap</label>
 						<BaseInput v-model="payload.nama" placeholder="Masukan disini..." />
@@ -106,6 +106,32 @@
 						<label class="form-label">Jabatan</label>
 						<BaseInput v-model="payload.jabatan" placeholder="Masukan disini..." />
 						<span v-for="error in v$.jabatan.$errors" :key="error.$uid">
+							<small class="text-danger text-lowercase">field {{ error.$message }}.</small>
+						</span>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="form-group">
+						<label class="form-label">Email</label>
+						<BaseInput v-model="payload.email" placeholder="Masukan disini..." />
+						<span v-for="error in v$.email.$errors" :key="error.$uid">
+							<small class="text-danger text-lowercase">field {{ error.$message }}.</small>
+						</span>
+					</div>
+					<div class="form-group">
+						<label class="form-label">Tipe User</label>
+						<select v-model="payload.role" class="form-control">
+							<option value="" selected disabled>--Pilih Tipe User--</option>
+							<option v-for="(opt, index) in roleOption" :key="index" :value="opt.value">{{ opt.display.toUpperCase() }}</option>
+						</select>
+						<span v-for="error in v$.role.$errors" :key="error.$uid">
+							<small class="text-danger text-lowercase">field {{ error.$message }}.</small>
+						</span>
+					</div>
+					<div class="form-group">
+						<label class="form-label">Password</label>
+						<BaseInput v-model="payload.password" placeholder="Masukan disini..." />
+						<span v-for="error in v$.password.$errors" :key="error.$uid">
 							<small class="text-danger text-lowercase">field {{ error.$message }}.</small>
 						</span>
 					</div>
@@ -165,7 +191,10 @@ const getStaff = () => {
 // #####################################################
 const payload = reactive({
 	nama: '',
-	jabatan: ''
+	jabatan: '',
+	email: '',
+	role: '',
+	password: ''
 })
 
 const myRegex = helpers.regex(/^[\w\s\d-\.]+$/d)
@@ -178,7 +207,16 @@ const rules = computed(() => {
 		jabatan: {
 			required,
 			myField: helpers.withMessage('value cannot contain special characters', myRegex)
-		}
+		},
+		email: {
+			required
+		},
+		password: {
+			required
+		},
+		role: {
+			required
+		},
 	}
 })
 const v$ = useVuelidate(rules, payload)
@@ -219,7 +257,7 @@ const deleteStaff = (params) => {
 	})
 		.then((res) => {
 			if (res.isConfirmed) {
-				Staff.delete(params.dataId)
+				Staff.deleteData(params.dataId)
 					.then((sucess) => {
 						let item = sucess.data
 						successAlert(item.message)
@@ -234,6 +272,11 @@ const deleteStaff = (params) => {
 
 // Another function
 // #####################################################
+
+const roleOption = [
+	{value: 'create-list', display: 'Staff'},
+	{value: 'validate-list', display: 'Validator'},
+]
 
 const pagginate = (params) => {
 	meta.page = params
@@ -267,6 +310,10 @@ const clearInput = () => {
 		payload[key] = ''
 	}
 	delete payload.id
+}
+
+const scopeCheck = () => {
+	return AuthCheck.rolesCheck()
 }
 
 const errorHandle = (code) => {

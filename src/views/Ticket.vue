@@ -87,7 +87,7 @@
 																			data-original-title="Edit Task">
 																			<i class="fa fa-edit"></i>
 																		</BaseButton>
-																		<BaseButton @event-click="deleteTicket" :data-id="ticket.id" data-toggle="tooltip"
+																		<BaseButton v-if="scopeCheck() === 'crud-list'" @event-click="deleteTicket" :data-id="ticket.id" data-toggle="tooltip"
 																			title="" class="btn-link btn-danger" data-original-title="Remove">
 																			<i class="fa fa-times"></i>
 																		</BaseButton>
@@ -403,6 +403,10 @@ const clearInput = () => {
 
 	staffName.value = ''
 	mhsName.value = ''
+}
+
+const scopeCheck = () => {
+	return AuthCheck.rolesCheck()
 }
 
 const errorHandle = (code) => {

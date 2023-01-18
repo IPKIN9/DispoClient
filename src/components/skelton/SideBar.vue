@@ -45,11 +45,38 @@
 							<p>Pengajuan</p>
 						</BaseLink>
 					</li>
+					<li class="nav-item">
+						<a href="#" @click="logout" role="button">
+							<i class="la flaticon-power"></i>
+							<p>Logout</p>
+						</a>
+					</li>
 				</ul>
 			</div>
 		</div>
 	</div>
 </template>
 <script setup>
+	import { useRouter } from 'vue-router'
 	import BaseLink from '../Button/BaseLink.vue'
+	import SweetAlert from '../../utils/SweetAlert'
+
+	const router = useRouter()
+
+	const logoutProcess = () => {
+		localStorage.removeItem('user')
+		localStorage.removeItem('scope')
+
+		router.replace('/')
+	}
+
+	const logout = () => {
+		SweetAlert.alertConfirm({
+			title: "Keluar sesi?",
+			confirmtext: "Logout"
+		})
+		.then((res) => {
+			logoutProcess()
+		})
+	}
 </script>
