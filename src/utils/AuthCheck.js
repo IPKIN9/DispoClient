@@ -42,7 +42,7 @@ export default {
     if (code === 401) {
       localStorage.removeItem("user");
       localStorage.removeItem("roles");
-      callback();
+      callback
       return "Sesi login telah kadarluasa";
     } else {
       return "Ada yang salah";

@@ -17,7 +17,7 @@
 								<div class="card-header">
 									<div class="d-flex align-items-center">
 										<h4 class="card-title">Tabel Staff</h4>
-										<BaseButton @event-click="showHideModal('newData')" class="btn-primary btn-round ml-auto">
+										<BaseButton v-if="AuthCheck.rolesCheck() === 'crud-list'" @event-click="showHideModal('newData')" class="btn-primary btn-round ml-auto">
 											<i class="fa fa-plus"></i>
 											Tambah Data
 										</BaseButton>

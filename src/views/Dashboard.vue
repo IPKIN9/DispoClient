@@ -117,9 +117,11 @@ const updateStatus = (params) => {
 				id_staff: data.id_staff,
 				keterangan: data.keterangan,
 				verifikasi: 1
+			})
+			.then((response) => {
+				getTicketStatus()
+				alert('Tiket disetujui !')
 			});
-
-			getTicketStatus()
 		}
 	})
 }
