@@ -24,7 +24,7 @@
 
 		<div class="container-fluid">
 			<div class="collapse" id="search-nav">
-
+				<a :link-to="{name: 'pengajuan'}" class="btn btn-light" style="width: 300px;"><b>Silahkan klik disini untuk pengajuan</b></a>
 			</div>
 			<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 				<li class="nav-item toggle-nav-search hidden-caret">
